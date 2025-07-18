@@ -1,0 +1,21 @@
+import express from "express";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
+import configViewEngine from "./config/viewEngine.js";
+import initWebRoutes from "./route/web.js";
+
+let app = express();
+
+//config app
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+configViewEngine(app);
+initWebRoutes(app);
+
+dotenv.config();
+let port = process.env.PORT;
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
