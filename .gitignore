@@ -1,5 +1,12 @@
-    /node_modules
-    /vendor
-    /.idea
-    .idea/
-    .env
+# Node.js dependencies
+node_modules/
+
+# PHP/Laravel dependencies
+vendor/
+
+# IDE settings (WebStorm, PhpStorm, etc.)
+.idea/
+
+# Environment variables
+.env
+.env.*
