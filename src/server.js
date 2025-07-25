@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import configViewEngine from "./config/viewEngine.js";
 import initWebRoutes from "./route/web.js";
+import connectDB from "./config/connectDB.js";
 
 let app = express();
 
@@ -12,6 +13,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 configViewEngine(app);
 initWebRoutes(app);
+connectDB();
 
 dotenv.config();
 let port = process.env.PORT;
