@@ -1,5 +1,6 @@
 import bcrypt, { hash } from "bcryptjs";
 import db from "../models/index.js";
+import { raw } from "body-parser";
 
 const createNewUser = async (data) => {
     try {
@@ -32,7 +33,18 @@ let hashUserPassword = async (password) => {
     }
 }
 
+const getAllUsers = async (req, res) => {
+    try {
+       const dataAllUsers = await db.User.findAll({
+        raw: true
+       });
+       return dataAllUsers;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export default {
     createNewUser: createNewUser,
-    hashUserPassword: hashUserPassword
+    getAllUsers: getAllUsers
 }

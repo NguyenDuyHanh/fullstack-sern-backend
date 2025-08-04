@@ -2,22 +2,19 @@ import db from "../models/index.js";
 import CRUDSevice from "../services/CRUDSevice.js";
 
 let getHomePage = async (req, res) => {
-    try {
-        const data = await db.User.findAll();
-        return res.render('homepage', {
-            data: JSON.stringify(data)
-        });
-    } catch (error) {
-        console.log(error);
-    }
+    return res.render('homepage');
 }
 
-let getAboutPage = (req, res) => {
-    return res.render('about/aboutpage');
+let getCreate = (req, res) => {
+    return res.render('create');
 }
 
-let getCRUD = (req, res) => {
-    return res.render('crud')
+const getUsers = async (req, res) => {
+    const data = await CRUDSevice.getAllUsers();
+    console.log(data);
+    return res.render('display', {
+        data: data
+    })
 }
 
 let create = async (req, res) => {
@@ -28,7 +25,7 @@ let create = async (req, res) => {
 
 export default {
     getHomePage: getHomePage,
-    getAboutPage: getAboutPage,
-    getCRUD: getCRUD,
-    create: create
+    getCreate: getCreate,
+    create: create,
+    getUsers: getUsers
 }
