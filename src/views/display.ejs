@@ -19,6 +19,7 @@
                 <th>Image</th>
                 <th>Role ID</th>
                 <th>Position ID</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +41,10 @@
                         </td>
                         <td><%= user.roleId %></td>
                         <td><%= user.positionId %></td>
+                        <td>
+                            <a href="/edit?id=<%= user.id %>" type="button">Edit</a>
+                            <a href="/delete?id=<%= user.id %>" type="button">Delete</a>
+                        </td>
                     </tr>
                 <% }) %>
             <% } else { %>

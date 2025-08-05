@@ -1,6 +1,7 @@
 import bcrypt, { hash } from "bcryptjs";
 import db from "../models/index.js";
 import { raw } from "body-parser";
+import { where } from "sequelize";
 
 const createNewUser = async (data) => {
     try {
@@ -35,10 +36,42 @@ let hashUserPassword = async (password) => {
 
 const getAllUsers = async (req, res) => {
     try {
-       const dataAllUsers = await db.User.findAll({
-        raw: true
-       });
-       return dataAllUsers;
+        const dataAllUsers = await db.User.findAll({
+            raw: true
+        });
+        return dataAllUsers;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const getUserFindById = async (userId) => {
+    try {
+        const data = await db.User.findByPk(userId, { raw: true });
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateUserData = async (data) => {
+    try {
+        const user = await getUserFindById(data.id);
+        if (user) {
+            await db.User.update({
+                firstName: data.firstname,
+                lastName: data.lastname,
+                address: data.address,
+                phonenumber: data.phonenumber,
+            },
+            {
+                where: {
+                    id: data.id
+                }
+            }
+        );
+            return user;
+        }
     } catch (error) {
         throw error;
     }
@@ -46,5 +79,7 @@ const getAllUsers = async (req, res) => {
 
 export default {
     createNewUser: createNewUser,
-    getAllUsers: getAllUsers
+    getAllUsers: getAllUsers,
+    getUserFindById: getUserFindById,
+    updateUserData: updateUserData
 }

@@ -1,4 +1,3 @@
-import db from "../models/index.js";
 import CRUDSevice from "../services/CRUDSevice.js";
 
 let getHomePage = async (req, res) => {
@@ -11,10 +10,22 @@ let getCreate = (req, res) => {
 
 const getUsers = async (req, res) => {
     const data = await CRUDSevice.getAllUsers();
-    console.log(data);
     return res.render('display', {
         data: data
     })
+}
+
+const edit = async (req, res) => {
+    const userId = req.query.id;
+    if(userId) {
+        const userData =  await CRUDSevice.getUserFindById(userId);
+        return res.render('edit', {
+            data: userData
+        })
+    }
+    else {
+        return res.send("User not found");
+    }
 }
 
 let create = async (req, res) => {
@@ -23,9 +34,18 @@ let create = async (req, res) => {
     return res.send("Added user successfully");
 }
 
+const update = async (req, res) => {
+    const data = req.body;
+    console.log(data);
+    await CRUDSevice.updateUserData(data);
+    return res.send('Updated data user successfully');
+}
+
 export default {
     getHomePage: getHomePage,
     getCreate: getCreate,
     create: create,
-    getUsers: getUsers
+    getUsers: getUsers,
+    edit: edit,
+    update: update
 }
