@@ -36,9 +36,19 @@ let create = async (req, res) => {
 
 const update = async (req, res) => {
     const data = req.body;
-    console.log(data);
     await CRUDSevice.updateUserData(data);
-    return res.send('Updated data user successfully');
+    return res.redirect('/get-read');
+}
+
+const destroy = async (req, res) => {
+    const userId = req.query.id;
+    if(userId) {
+        await CRUDSevice.deleteUserData(userId);
+        return res.send("Deleted user data successfully");
+    }
+    else {
+        return res.send("User not found");
+    }
 }
 
 export default {
@@ -47,5 +57,6 @@ export default {
     create: create,
     getUsers: getUsers,
     edit: edit,
-    update: update
+    update: update,
+    destroy: destroy
 }

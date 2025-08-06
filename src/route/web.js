@@ -10,8 +10,7 @@ let initWebRoutes = (app) => {
     router.get("/get-read", homeController.getUsers);
     router.get("/edit", homeController.edit);
     router.post("/update", homeController.update);
-
-
+    router.get("/delete", homeController.destroy);
 
     return app.use("/", router)
 }

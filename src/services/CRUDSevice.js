@@ -47,7 +47,7 @@ const getAllUsers = async (req, res) => {
 
 const getUserFindById = async (userId) => {
     try {
-        const data = await db.User.findByPk(userId, { raw: true });
+        const data = await db.User.findByPk(userId);
         return data;
     } catch (error) {
         throw error;
@@ -77,9 +77,22 @@ const updateUserData = async (data) => {
     }
 }
 
+const deleteUserData = async (id) => {
+    try {
+        const user = await getUserFindById(id);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        await user.destroy();
+    } catch (error) {
+        throw error;
+    }
+}
+
 export default {
     createNewUser: createNewUser,
     getAllUsers: getAllUsers,
     getUserFindById: getUserFindById,
-    updateUserData: updateUserData
+    updateUserData: updateUserData,
+    deleteUserData: deleteUserData
 }
