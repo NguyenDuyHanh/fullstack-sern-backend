@@ -1,7 +1,6 @@
 import bcrypt, { hash } from "bcryptjs";
 import db from "../models/index.js";
-import { raw } from "body-parser";
-import { where } from "sequelize";
+
 
 const createNewUser = async (data) => {
     try {
@@ -27,7 +26,7 @@ const createNewUser = async (data) => {
 let hashUserPassword = async (password) => {
     try {
         const salt = await bcrypt.genSalt(10);
-        let hashPassword = await bcrypt.hash(password, salt);
+        const hashPassword = await bcrypt.hash(password, salt);
         return hashPassword;
     } catch (error) {
         throw error;
